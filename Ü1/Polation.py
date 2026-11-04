@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from hansi import dividierte_differenzen
+import hansi as hs
 
 def f(x):
     return pow(1+10*pow(x,2),-1)
@@ -19,7 +19,7 @@ gitter = np.linspace(-1,1,201)
 x_stutz = np.linspace(-1,1,11)
 n = len(x_stutz)
 
-koeffs = dividierte_differenzen(x_stutz,f(x_stutz))
+koeffs = hs.dividierte_differenzen(x_stutz,f(x_stutz))
 
 
 
