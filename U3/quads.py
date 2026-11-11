@@ -13,21 +13,22 @@ def integrate(f,a,b,xq = [0,1],wq = [0.5,0.5],n = 1):
         an = ((b-a)/n)*i + a
         for j in range(len(xq)):
             s = s + ((b-a)/n)*wq[j]*f(an+((b-a)/n)*xq[j])
+    return s
 
 def fft(y):
     y = np.array(y, dtype=complex)
     m = len(y)
-    n = np.log2(m)
+    n = int(np.log2(m))
     y = y[bit_reverse(n)]
-    for i in range(1,n-1):
-        mi = 2**m
+    for i in range(1,n+1):
+        mi = 2**i
         w = np.exp(-2*np.pi*1j/mi)
         for j in range(0,m,mi):
-            for l in range(mi/2):
-                u = y[j+1]
-                v = (w**l)*y[j+l+mi/2]
+            for l in range(mi//2):
+                u = y[j+l]
+                v = (w**l)*y[j+l+mi//2]
                 y[j+l] = u+v
-                y[j+l + m//2] = u-v
+                y[j+l + mi//2] = u-v
 
     return y
 
@@ -37,3 +38,7 @@ def fft(y):
 if __name__ == '__main__':
     s = integrate(np.sin,0,np.pi, n = 500)
     print(s)
+
+    y = np.array([1,1,1,1,1,1,1,1])
+    y = fft(y)
+    print(y)
